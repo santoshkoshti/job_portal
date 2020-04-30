@@ -89,14 +89,17 @@
                                             <a href="#" class="btn disabled">Alredy Applied</a>
                                          </div>
                                     {% else %}
+
                                         <div class="apply-btn2">
                                           <form method="post" action="{% url 'applyjob' %}"  >
                                                 {% csrf_token %}
-                                              <input type="hidden" name="id" value="{{ job.pk }}"/>
+                                              <input type="hidden" name="id" value="{{ job.id }}"/>
                                               <input type="submit" class="btn"
                                                 value="Apply Now"/>
                                             </form>
                                         </div>
+
+
                                     {% endif %}
                             {%  else %}
                                  <div class="apply-btn2">

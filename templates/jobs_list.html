@@ -41,12 +41,13 @@
                                         <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span>
                                     {% endif %}</li>
 
-                                        <li>Posted {{ job.created_at|timesince }} </li>
+
                                     </ul>
                                 </div>
                             </div>
                             <div class="items-link f-right">
                                 <a href="{% url 'job-details' job.slug %}">Apply Now</a>
+                                <li><i class="far fa-clock"></i> Posted :{{ job.created_at|timesince }} </li>
                             </div>
                         </div>
                     {% endfor %}

@@ -19,5 +19,7 @@ urlpatterns = [
     path('comingsoon/', views.comingsoon, name='commingsoon'),
     path('search', SearchView.as_view(), name='search'),
     path('postjob', views.postjob, name='postjob'),
+    path('applications/', views.applications, name='applications'),
+    path('myjobs/', views.myjobs, name='myjobs'),
 
 ]

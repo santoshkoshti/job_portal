@@ -11,9 +11,9 @@ from django.db.models import Q
 def HomeView(request):
     try:
         context = {
-            "jobs": Job.objects.order_by("-id"),
+
             "category": JobCategory.objects.all()[:8],
-            "jobss": Job.objects.order_by("?").filter()[:6],
+            "jobss": Job.objects.order_by("-id").filter()[:6],
             "location": Location.objects.all()[:6],
             "company": Company.objects.all()[:6],
         }
@@ -21,8 +21,6 @@ def HomeView(request):
         return HttpResponse(e)
     return render(request, "index.html", context)
 
-def commingsoon(request):
-    return HttpResponse('This page coming soon go to home page <a href="/"> click here</a>')
 
 def JobListView1(request):
     try:
@@ -41,6 +39,7 @@ def JobListView1(request):
         return HttpResponse(e)
     return render(request, "jobs_list.html", context)
 
+
 def categorylist(request):
     try:
         categorylists =JobCategory.objects.all()
@@ -54,6 +53,7 @@ def categorylist(request):
     except Exception as e:
         return HttpResponse(e)
     return render(request, "categorylist.html", context)
+
 
 def categoryjobs(request, slug_text):
     try:
@@ -71,6 +71,7 @@ def categoryjobs(request, slug_text):
         return HttpResponse(e)
     return render(request, "categoryjobs.html", context)
 
+
 def locationlist(request):
     try:
         locationlists = Location.objects.all()
@@ -84,6 +85,7 @@ def locationlist(request):
     except Exception as e:
         return HttpResponse(e)
     return render(request, "locationlist.html", context)
+
 
 def locationjobs(request, slug_text):
     try:
@@ -102,7 +104,6 @@ def locationjobs(request, slug_text):
     except Exception as e:
         return HttpResponse(e)
     return render(request, "locationjobs.html", context)
-
 
 
 
@@ -126,6 +127,8 @@ def job_details(request, slug_text):
         return HttpResponse(e)
     return render(request, "job_details.html", context)
 
+
+
 def companylist(request):
     try:
         company_lists=Company.objects.all()
@@ -139,6 +142,8 @@ def companylist(request):
     except Exception as e:
         return HttpResponse(e)
     return render(request, "companylist.html", context)
+
+
 
 def companyjobs(request, slug_text):
     try:
@@ -211,7 +216,7 @@ def postjob(request):
             # print(category)
             # print(last_date)
             obj.save()
-            return HttpResponse('SAVED')
+            return HttpResponse('SUCCESSFULLY POST YOU JOB')
         else:
             category = JobCategory.objects.all()
             locations = Location.objects.all()
@@ -223,6 +228,29 @@ def postjob(request):
             }
             return render(request,'postjob.html',context)
 
+    else:
+        return redirect('login')
+
+
+
+def applications(request):
+    if request.user.is_authenticated:
+        context = {
+            "application": Applicant.objects.filter(user=request.user)
+        }
+        return render(request,"applications.html",context)
+    else:
+        return redirect('login')
+
+
+
+
+def myjobs(request):
+    if request.user.is_authenticated:
+        context = {
+            "myjobs": Job.objects.filter(user_id=request.user)
+        }
+        return render(request,"jobapplications.html",context)
     else:
         return redirect('login')
 

@@ -78,52 +78,7 @@
                             </div>
                         </div>
                     {% endfor %}
-        <div class="row">
-           <div class="col-md-12">
-               <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4 mb-4">
-                 <ul class="pagination">
-                {% if pagination.has_previous %}
-                    <li class="page-item">
-                        <a href="?page=1" class="page-link">&laquo;</a>
-                    </li>
-                     <li class="page-item">
-                        <a href="?page={{ pagination.previous_page_number}}" class="page-link">&lsaquo;</a>
-                    </li>
-                {% else %}
-                     <li class="page-item disabled">
-                         <a class="page-link">&laquo;</a>
-                     </li>
-                      <li class="page-item disabled">
-                         <a class="page-link">&lsaquo;</a>
-                     </li>
-                {% endif %}
-                {% for i in pagination.paginator.page_range %}
-                     {% if pagination.number == i %}
-                       <li class="page-item active">
-                           <p class="page-link"><strong >{{ i }}</strong></p>
-                       </li>
-                     {% elif i > pagination.number|add:'-2' and i < pagination.number|add:'2' %}
-                       <li class="page-item">
-                         <a href="?page={{ i }}" class="page-link">{{ i }}</a>
-                       </li>
-                     {% endif %}
-                 {% endfor %}
-                 {% if pagination.has_next %}
-                     <li class="page-item">
-                        <a href="?page={{ pagination.next_page_number }}" class="page-link">&rsaquo;</a>
-                     </li>
-                     <li class="page-item">
-                        <a href="?page={{ pagination.paginator.num_pages }}" class="page-link">&raquo;</a>
-                     </li>
-                   {% else %}
-                         <li class="page-item disabled">
-                        <a class="page-link">&rsaquo;</a>
-                     </li>
-                      <li class="page-item disabled">
-                        <a class="page-link">&raquo;</a>
-                      </li>
-                 {% endif %}
-                 </ul></nav></div>
+
         </div>
        </div>
                 </div>
