@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+<!-- Featured_job_start -->
+    <div class="our-services " style="margin-top:80px;">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <h3 class="heading"><span class="accent"> {{ categorys }} JOBS</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                    {% for job in category %}
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="#"><img src="{% static 'img/icon/job-list1.png' %}" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="{% url 'job-details' job.slug %}"><h4>{{ job.title }}</h4></a>
+                                    <ul>
+                                        <li><i class="fas fa-building"></i><a href="{% url 'company-jobs' job.company_name.slug %}">  {{ job.company_name }}</a></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><a href="{% url 'location-jobs' job.job_location.slug %}">  {{ job.job_location }}</a></li>
+
+                                        <li>{% if job.type == 'Full time' %}
+                                        <span class="badge featured-badge badge-success">Full time</span>
+                                    {% elif job.type == 'Part time' %}
+                                        <span class="badge featured-badge badge-primary">Part time</span>
+                                    {% else %}
+                                        <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span>
+                                    {% endif %}</li>
+
+                                        <li>Posted {{ job.created_at|timesince }} </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="{% url 'job-details' job.slug %}">Apply Now</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                      <div class="row">
+           <div class="col-md-12">
+               <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4 mb-4">
+                 <ul class="pagination">
+                {% if pagination.has_previous %}
+                    <li class="page-item">
+                        <a href="?page=1" class="page-link">&laquo;</a>
+                    </li>
+                     <li class="page-item">
+                        <a href="?page={{ pagination.previous_page_number}}" class="page-link">&lsaquo;</a>
+                    </li>
+                {% else %}
+                     <li class="page-item disabled">
+                         <a class="page-link">&laquo;</a>
+                     </li>
+                      <li class="page-item disabled">
+                         <a class="page-link">&lsaquo;</a>
+                     </li>
+                {% endif %}
+                {% for i in pagination.paginator.page_range %}
+                     {% if pagination.number == i %}
+                       <li class="page-item active">
+                           <p class="page-link"><strong >{{ i }}</strong></p>
+                       </li>
+                     {% elif i > pagination.number|add:'-2' and i < pagination.number|add:'2' %}
+                       <li class="page-item">
+                         <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                       </li>
+                     {% endif %}
+                 {% endfor %}
+                 {% if pagination.has_next %}
+                     <li class="page-item">
+                        <a href="?page={{ pagination.next_page_number }}" class="page-link">&rsaquo;</a>
+                     </li>
+                     <li class="page-item">
+                        <a href="?page={{ pagination.paginator.num_pages }}" class="page-link">&raquo;</a>
+                     </li>
+                   {% else %}
+                         <li class="page-item disabled">
+                        <a class="page-link">&rsaquo;</a>
+                     </li>
+                      <li class="page-item disabled">
+                        <a class="page-link">&raquo;</a>
+                      </li>
+                 {% endif %}
+                 </ul></nav></div>
+        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

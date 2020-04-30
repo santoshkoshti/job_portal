@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    Employee Register
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-lg-6 offset-3">
+        <div class="box">
+            <h3 class="heading">New account</h3>
+            <p class="lead">Not our registered yet?</p>
+            <p class="text-muted">If you have any questions, please feel free to <a href="#">contact us</a>,
+                our customer service center is working for you 24/7.</p>
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ message }}</strong>
+            </div>
+
+
+            {% endfor %}
+            <form action="register" method="post">
+                {% csrf_token %}
+                    <input  type="text" placeholder="Name" name="first_name"><br><br>
+                    <input  type="text" placeholder="last name" name="last_name"><br><br>
+                    <input  type="text" placeholder="username" name="username"><br><br>
+                    <input  type="email" placeholder="email" name="email"><br><br>
+                    <input  type="password" placeholder="password" name="password"><br><br>
+
+                 <input  type="submit" placeholder="sumbit" name="sumbit">
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

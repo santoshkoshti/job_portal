@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Job details
+{% endblock %}
+{% block content %}
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area " >
+        <div  class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="{% static 'img/hero/about.jpg' %}" style="height:100px !important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>{{ job.title }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Hero Area End -->
+
+
+
+        <!-- job post company Start -->
+        <div class="job-post-company pt-120 pb-120">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <!-- Left Content -->
+                    <div class="col-xl-7 col-lg-8">
+                        <!-- job single -->
+                        <div class="single-job-items mb-50">
+                            <div class="job-items">
+                                <div class="company-img company-img-details">
+                                    <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                        <h4>{{ job.title }}</h4>
+                                    <ul>
+                                         <li><i class="fas fa-building"></i><a href="{% url 'company-jobs' job.company_name.slug %}">  {{ job.company_name }}</a></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><a href="{% url 'location-jobs' job.job_location.slug %}">  {{ job.job_location }}</a></li>
+
+                                        <li>&#8377; {% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Negotiable {% endif %}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                          <!-- job single End -->
+                       
+                        <div class="job-post-details">
+                            <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Job Description</h4>
+                                </div>
+                                {{ job.description }}
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Right Content -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="post-details3  mb-50">
+                            <!-- Small Section Tittle -->
+                           <div class="small-section-tittle">
+                               <h4>Job Overview</h4>
+                           </div>
+                          <ul>
+                              <li>Posted date : <span>{{ job.created_at|timesince }}</span></li>
+                              <li>Location : <span>{{ job.job_location }}</span></li>
+                              <li>Vacancy : <span>02</span></li>
+                              <li>Job nature : <span> {% if job.type == 'Full time' %}
+                                                    Full time
+                                                {% elif job.type == 'Part time' %}
+                                                    Part time
+                                                {% else %}
+                                                   Internship
+                                                {% endif %}</span>
+                              </li>
+                              <li>Salary :  <span>{% if job.salary > 0 %} {{ job.salary }}/Monthly {% else %} Negotiable {% endif %}</span></li>
+                              <li>Last date : <span>{{ job.last_date|date }}</span></li>
+                          </ul>
+
+                            {% if request.user.is_authenticated %}
+                                    {% if jobappiled %}
+                                         <div class="apply-btn2">
+                                            <a href="#" class="btn disabled">Alredy Applied</a>
+                                         </div>
+                                    {% else %}
+                                        <div class="apply-btn2">
+                                          <form method="post" action="{% url 'applyjob' %}"  >
+                                                {% csrf_token %}
+                                              <input type="hidden" name="id" value="{{ job.pk }}"/>
+                                              <input type="submit" class="btn"
+                                                value="Apply Now"/>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                            {%  else %}
+                                 <div class="apply-btn2">
+                                    <a href="{% url 'login' %}" class="btn">Login Apply Now</a>
+                                 </div>
+                            {% endif %}
+                       </div>
+                        <div class="post-details4  mb-50">
+                            <!-- Small Section Tittle -->
+                           <div class="small-section-tittle">
+                               <h4>Company</h4>
+                           </div>
+                              <span>{{ job.company_name }}</span>
+                              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                <a href="{% url 'company-jobs' job.company_name.slug %}" class="genric-btn primary-border circle arrow">View<span
+						class="lnr lnr-arrow-right"></span></a>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- job post company End -->
+
+    </main>
+{% endblock %}

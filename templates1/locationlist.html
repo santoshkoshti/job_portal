@@ -1,0 +1,25 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<section class="bg-light-gray">
+        <div class="container">
+            <h3 class="heading">JOB Locations</h3>
+            <div class="row featured align-items-stretch">
+                {% for location in location_list %}
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="box-image-text bg-light full-height" >
+                            <div class="content bg-white" style="padding-top:20px;padding-bottom:20px;">
+                            <a href="{% url 'location-jobs' location.slug %}">    <p class="featured__details" >
+                                    <h5><img src="{% static 'img/company-1.png' %}" alt="" style="max-width:40px;"> &nbsp;&nbsp; {{ location.title }}</h5>
+                                </p></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+    </section>
+{% endblock %}

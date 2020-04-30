@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-lg-6 offset-3">
+        <div class="box">
+            <h3 class="heading">Login</h3>
+            <p class="lead">You don't have account?</p>
+
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ message }}</strong>
+            </div>
+            {% endfor %}
+            <form action="" method="post">
+                {% csrf_token %}
+                    <input  type="text" placeholder="username" name="username"><br><br>
+                    <input  type="password" placeholder="password" name="password"><br><br>
+                 <input  type="submit" placeholder="sumbit" name="sumbit">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

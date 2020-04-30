@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    All jobs
+{% endblock %}
+
+{% block content %}
+
+<br><br>
+ <section class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="heading">Add a new Job</h1>
+                </div>
+            </div>
+        </div>
+    </section><br><br>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <form id="job-main-form" method="post" action="{% url 'postjob' %}" class="job-add-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" value="{{ user.id }}">
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <label for="title">Job Title</label>
+                                <input id="title" name="title" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <label for="text">Job Description</label>
+                                <textarea id="text" name="description" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <label for="salary">Salary(Leave empty if it's negotiable)</label>
+                                <input id="salary" name="salary" type="number" min="1000" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 form-group">
+                                <label for="location">Location</label>
+                                <select id="location" name="location" class="form-control select2">
+                                    {% for locations in locations %}
+                                    <option value="{{ locations.id }}">{{ locations.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div></div>
+                         <div class="row">
+
+                            <div class="col-lg-12 form-group">
+                                <label for="type">Type</label>
+                                <select id="type" name="type" placeholder="Choose job type"
+                                        class="form-control select2">
+                                    <option value="Full time" {% if form.type.value == "Full time" %} selected {% endif %}>Full time</option>
+                                    <option value="Part time" {% if form.type.value == "Part time" %} selected {% endif %}>Part time</option>
+                                    <option value="Intership" {% if form.type.value == "Intership" %} selected {% endif %}>Internship</option>
+                                </select>
+                            </div></div>
+                        <div class="row">
+
+                            <div class="col-lg-12 form-group">
+                                <label for="category">Category</label>
+                                <select id="category" name="category" class="form-control select2">
+                                    {% for category in category %}
+                                    <option value="{{ category.id }}">{{ category.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-6 form-group">
+                                <label for="validity">Validity of the post</label>
+                                <input id="validity" name="last_date" type="date" class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <label for="company_name">Company name</label>
+                                <select id="company_name" name="company_name" class="form-control select2">
+                                    {% for company in companys %}
+                                    <option value="{{ company.id }}">{{ company.title }}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <hr>
+                                <div class="checkbox text-center">
+                                    <label>
+                                        <input type="checkbox"> I agree with the <a href="#">Terms and conditions</a>.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <hr>
+                                <button type="submit" class="btn btn-outline-white-primary"><i class="fa fa-magic"></i>
+                                    Save and Post
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section><br><br>
+
+
+{% endblock %}
