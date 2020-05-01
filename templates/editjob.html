@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <h1 class="heading">Add a new Job</h1>
+                    <h1 class="heading">Edit Job</h1>
                 </div>
             </div>
         </div>
@@ -20,31 +20,33 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <form id="job-main-form" method="post" action="{% url 'postjob' %}" class="job-add-form">
+                    <form id="job-main-form" method="post" action="{% url 'editjobpost' %}" class="job-add-form">
                         {% csrf_token %}
                         <input type="hidden" name="username" value="{{ user.id }}">
+                        <input type="hidden" name="jobid" value="{{ job.id }}">
                         <div class="row">
                             <div class="col-lg-12 form-group">
                                 <label for="title">Job Title</label>
-                                <input id="title" name="title" type="text" class="form-control" value="" required>
+                                <input id="title" name="title" type="text" class="form-control" value="{{ job.title }}" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 form-group">
                                 <label for="text">Job Description</label>
-                                <textarea id="text" name="description" rows="5" class="form-control" required></textarea>
+                                <textarea id="text" name="description" rows="5" class="form-control" required>{{ job.description }}</textarea>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 form-group">
                                 <label for="salary">Salary(Leave empty if it's negotiable)</label>
-                                <input id="salary" name="salary" type="number" min="1000" class="form-control" value="" required>
+                                <input id="salary" name="salary" type="number" min="1000" class="form-control" value="{{ job.salary }}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 form-group">
                                 <label for="location">Location</label>
                                 <select id="location" name="location" class="form-control select2">
+                                    <option value="{{ job.job_location.id }}" selected="selected">{{ job.job_location }}</option>
                                     {% for locations in locations %}
                                     <option value="{{ locations.id }}">{{ locations.title }}</option>
                                     {% endfor %}
@@ -66,6 +68,7 @@
                             <div class="col-lg-12 form-group">
                                 <label for="category">Category</label>
                                 <select id="category" name="category" class="form-control select2">
+                                    <option value="{{ job.category_type.id }}" selected="selected">{{ job.category_type }}</option>
                                     {% for category in category %}
                                     <option value="{{ category.id }}">{{ category.title }}</option>
                                     {% endfor %}
@@ -76,7 +79,7 @@
                         <div class="row">
                             <div class="col-xl-6 form-group">
                                 <label for="validity">Validity of the post</label>
-                                <input id="validity" name="last_date" type="date" class="form-control" value="" required>
+                                <input id="validity" name="last_date" type="date" class="form-control" value="{{ job.last_date|date:'Y-m-d' }}" required>
                             </div>
                         </div>
 
@@ -84,6 +87,7 @@
                             <div class="col-lg-12 form-group">
                                 <label for="company_name">Company name</label>
                                 <select id="company_name" name="company_name" class="form-control select2">
+                                    <option value="{{ job.company_name.id }}" selected="selected">{{ job.company_name }}</option>
                                     {% for company in companys %}
                                     <option value="{{ company.id }}">{{ company.title }}</option>
                                     {% endfor %}

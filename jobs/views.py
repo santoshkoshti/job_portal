@@ -198,7 +198,6 @@ class SearchView(ListView):
 def postjob(request):
     obj = Job()
     if request.user.is_authenticated:
-
         if request.method == "POST":
             obj.user_id = request.POST['username']
             obj.title = request.POST['title']
@@ -255,5 +254,46 @@ def myjobs(request):
         return redirect('login')
 
 
+
+def edit_job(request, slug_text):
+    obj = Job()
+    if request.user.is_authenticated:
+            job = Job.objects.get(slug=slug_text)
+            category = JobCategory.objects.all()
+            locations = Location.objects.all()
+            companys = Company.objects.all()
+            context = {
+                "job" : job,
+                "category": category,
+                "locations":locations,
+                "companys":companys
+            }
+            return render(request,'editjob.html',context)
+    else:
+        return redirect('login')
+
+def edit_job_post(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            check=request.POST['jobid']
+            obj = Job(pk=check)
+            obj.user_id = request.POST['username']
+            obj.title = request.POST['title']
+            obj.description = request.POST['description']
+            obj.salary = request.POST['salary']
+            obj.job_location_id = request.POST['location']
+            obj.type = request.POST['type']
+            obj.category_type_id = request.POST['category']
+            obj.last_date = request.POST['last_date']
+            obj.company_name_id = request.POST['company_name']
+            obj.save()
+            return HttpResponse('edited POST YOU JOB')
+    else:
+        return redirect('login')
+
+def del_job(request, id):
+    job = Job.objects.get(pk=id)
+    job.delete()
+    return HttpResponse('deleted successfully')
 def comingsoon(request):
     return HttpResponse('This page coming soon go to home page <a href="/"> click here</a>')

@@ -29,7 +29,7 @@
                                 <div class="job-tittle">
                                     <a href="{% url 'job-details' job.job.slug %}"><h4>{{ job.job }}</h4></a>
                                     <ul>
-                                         <li><i class="far fa-clock"></i> Posted :{{ job.created_at|timesince }} </li>
+                                         <li><i class="far fa-clock"></i> Applied at : {{ job.created_at|timesince }} </li>
                                     </ul>
                                 </div>
                             </div>

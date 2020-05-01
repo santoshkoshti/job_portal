@@ -34,8 +34,8 @@
                                 </div>
                             </div>
                             <div class="items-link f-right">
-                                <a class="disabled">Edit</a>
-
+                                <a href="{% url 'editjob' job.slug %}" class="disabled">Edit</a>
+                                <a onclick="return confirm('Are you sure for Delete this job {{ job.title }} ?')" href="{% url 'deletejob' job.id %}" style="background-color:red;color:white;">Delete</a>
                             </div>
                         </div>
                     {% endfor %}
